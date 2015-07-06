@@ -63,6 +63,7 @@ class Robot:
 
     # Check if move is safe
     def is_safe(self):
+        # print "Calling is_safe with orientation " + self.orientation
         if self.orientation == 'W':
             if self.xCoordinate - 1 < 0:
                 return False
@@ -75,13 +76,17 @@ class Robot:
         if self.orientation == 'N':
             if self.yCoordinate + 1 > limitY:
                 return False
+        # print "This is safe"
         return True
 
     # Checks if location has scent
     def is_scent(self):
+        # print "Looking for " + str(self.xCoordinate) + " " + str(self.yCoordinate) + " in " + str(scents)
         if (self.xCoordinate, self.yCoordinate) in scents:
+            # print True
             return True
         else:
+            # print False
             return False
 
     # Makes a string of robot's status
@@ -112,6 +117,8 @@ except IOError:
     print "There is no such file"
     sys.exit()
 
+# print commands
+
 # The size of the grid is taken from the first line
 limitX = int(commands[0][0])
 limitY = int(commands[0][2])
@@ -125,12 +132,16 @@ for i in range(1,len(commands)):
     # Create a robot
     if counter == 0:
         robot = Robot(int(commands[i][0]),int(commands[i][2]),commands[i][4])
+        # print "This robot has been created " + robot.toString()
     # Operate robot
     elif counter == 1:
         for char in commands[i]:
+            print char,
             if char == 'F':
+                # print "I'm moving"
                 robot.move()
             else:
+                # print "I'm rotating"
                 robot.rotate(char)
         f.write(robot.toString())
     # Empty line
